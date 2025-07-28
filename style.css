@@ -11,8 +11,11 @@
     text-align: center;
     background-color: rgb(197, 26, 54);
     color: white;
-    font-family: sans-serif;
+  
     padding: 50px;
+}
+.Rooms h1{
+  font-family: "Inter";
 }
 
 /* Text area 1 Code */
@@ -37,11 +40,6 @@
     font-family: "Inter";
     cursor: pointer;
 
-    /* position: absolute;
-    top: 50%;
-    left: 50%; */
-    /* transform: translate(-50%, -50%); */
-
 }
 
 
@@ -55,7 +53,6 @@
 .Text-2 textarea {
     width: 600px;
     margin: auto;
-    /* padding: 10px; */
     resize: none;
     box-sizing: border-box;
     border-radius: 8px;
@@ -83,7 +80,7 @@
   
   padding-top: 20px;
   padding-left: 15%;
-  font-size: larger;
+  font-size: 40px;
   font-family: "Inter";
   font-weight: 700;
   color: rgb(75, 18, 7);
@@ -95,4 +92,24 @@ p {
   text-align: center;
   font-size: 60px;
   margin-top: 0px;
+  background-color: rgb(180, 77, 77);
 }
+
+
+
+textarea[disabled] {
+    background-color: #f0f0f0;
+    color: white#3d2222;
+    cursor: not-allowed;
+}
+
+.Timer {
+    font-weight: bold;
+    color: white;
+    margin-top: 5px;
+}
+textarea[disabled] {
+    background-color: #3c3939;
+}
+
+   
