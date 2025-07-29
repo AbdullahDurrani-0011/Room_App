@@ -6,13 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room App</title>
     <link rel="stylesheet" href="./style.css">
+    <link href="
+    https://cdn.jsdelivr.net/npm/ace-code-editor@1.2.3/lib/ace/theme/monokai.min.css
+    " rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.2/ace.min.js"></script>
+
 </head>
 
 <body>
     <header class="Rooms">
         <h1>Room Connections</h1>
     </header>
-
+    <p class="Timer" id="Countdown">Time remaining: 5:00</p>
+    <!-- 
     <p class="Timer" id="Countdown">Time remaining: 5:00</p>
     <div class="Text-1">
         <h1 class="Dev">Developer 1</h1>
@@ -22,10 +28,67 @@
     <div class="Text-2">
         <h1 class="Dev">Developer 2</h1>
         <textarea id="InnerText2" value="" placeholder="Text Here" rows="10" required="" disabled></textarea>
+    </div> -->
+    <!-- <div class="editor" id="container"></div>
+    <div class="editor-2" id="container-1"></div> -->
+
+
+    <div class="editor-container">
+        <div class="editor" id="editor1"></div>
+        <div class="editor-2" id="editor2"></div>
+
     </div>
 
 
-    <script src="./script.js"></script>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs/editor/editor.main.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs/loader.min.js"></script>
+
+
+    <script>
+        require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs' } });
+        require(['vs/editor/editor.main'], () => {
+            monaco.editor.create(document.getElementById('editor1'), {
+                value: 'console.log("Editor 1");',
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+
+            monaco.editor.create(document.getElementById('editor2'), {
+                value: 'console.log("Editor 2");',
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+        });
+    </script>
+
+
+
+
+    <!-- <script>
+        require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs' } });
+        require(['vs/editor/editor.main'], () => {
+            monaco.editor.create(document.getElementById('container'), {
+                value: 'console.log("Hello, Monaco!");',
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+        });
+        require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs' } });
+        require(['vs/editor/editor.main'], () => {
+            monaco.editor.create(document.getElementById('container'), {
+                value: 'console.log("Hello, Monaco!");',
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+        });
+    </script> -->
+
+
+
+
+    <script  src="./script.js"></script>
 </body>
 
 </html>
