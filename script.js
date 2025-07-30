@@ -12,48 +12,80 @@
 // const topArea = document.getElementById("InnerText1");
 // const bottomArea = document.getElementById("InnerText2");
 
-// const topArea = document.getElementById("editor1");
-// const bottomArea = document.getElementById("editor2");
 
 
-
-// editor1.addEventListener("input", () => {
-//   editor2.value = editor1.value;
-// });
-
-// editor2.addEventListener("input", () => {
-//   editor1.value = editor2.value;
-// });
+function onDidChangeModelContent() {
+  const topArea = document.getElementById("editor1");
+  const bottomArea = document.getElementById("editor2");
 
 
+  editor1.onDidChangeModelContent(() => {
+    editor2.setValue(editor1.getValue());
+  });
+  editor2.onDidChangeModelContent(() => {
+    editor1.setValue(editor2.getValue());
+  });
 
+  const startingMinutes = 5;
 
+  let time = startingMinutes * 60;
+  
 
+  const countdownEl = document.getElementById("Countdown");
 
+  function updateCountdown() {
 
-const startingMinutes = 5;
-let time = startingMinutes * 60;
-const countdownEl = document.getElementById("Countdown");
-setInterval(updateCountdown, 1000);
-
-function updateCountdown() {
-  const minutes = Math.floor(time / 60);
+     const minutes = Math.floor(time / 60);
   let seconds = time % 60;
+ countdownEl.innerText = `${minutes}: ${seconds}`;
+    time--;
+  setInterval(updateCountdown, 1000);
 
-  countdownEl.innerText = `${minutes}: ${seconds}`;
-  time--;
-
-  // console.log(time, "time---");
-
-  if (time == 0) {
-    if (topArea.disabled) {
-      topArea.disabled = false;
-      bottomArea.disabled = true;
-    } else {
-      bottomArea.disabled = false;
-      topArea.disabled = true;
-    }
-
-    time = startingMinutes * 60;
   }
+  
+
+  function toggleEditors(editorToEnable, editorToDisable) {
+
+    if (time === 0){
+  
+    editorToEnable.updateOptions({ readOnly: true });
+
+    editorToDisable.updateOptions({ readOnly: false });
+      time = startingMinutes * 60;
+  }
+  toggleEditors(topArea , bottomArea);
+  
 }
+}
+
+
+
+
+
+// topArea.addEventListener("input", () => {
+//   bottomArea.value = topArea.value;
+// });
+
+// bottomArea.addEventListener("input", () => {
+//   topArea.value = bottomArea.value;
+// });
+
+// function updateCountdown() {
+//   const minutes = Math.floor(time / 60);
+//   let seconds = time % 60;
+
+//   countdownEl.innerText = `${minutes}: ${seconds}`;
+//   time--;
+
+//   if (time == 0) {
+//     if (topArea.disabled) {
+//       topArea.disabled = false;
+//       bottomArea.disabled = true;
+//     } else {
+//       bottomArea.disabled = false;
+//       topArea.disabled = true;
+//     }
+
+//     time = startingMinutes * 60;
+//   }
+// }
