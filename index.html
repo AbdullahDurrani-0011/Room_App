@@ -51,25 +51,44 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs/editor/editor.main.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs/loader.min.js"></script>
 
-
+<!-- 
     <script>
         require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs' } });
         require(['vs/editor/editor.main'], () => {
-           editor1 =  monaco.editor.create(document.getElementById('editor1'), {
+         const  editor1 =  monaco.editor.create(document.getElementById('editor1'), {
                 value: 'console.log("Editor 1");',
                 language: 'javascript',
                 theme: 'vs-dark'
             });
 
-            editor2 = monaco.editor.create(document.getElementById('editor2'), {
+          const  editor2 = monaco.editor.create(document.getElementById('editor2'), {
                 value: 'console.log("Editor 2");',
                 language: 'javascript',
                 theme: 'vs-dark'
             });
         });
-    </script>
+    </script> -->
 
+<script>
+    require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs' } });
 
+require(['vs/editor/editor.main'], () => {
+  window.topArea = monaco.editor.create(document.getElementById("editor1"), {
+    value: 'console.log("Editor 1");',
+    language: 'javascript',
+    theme: 'vs-dark',
+    readOnly: false
+  });
+
+  window.bottomArea = monaco.editor.create(document.getElementById("editor2"), {
+    value: 'console.log("Editor 2");',
+    language: 'javascript',
+    theme: 'vs-dark',
+    readOnly: true
+  });
+});
+
+</script>
 
 
     <!-- <script>

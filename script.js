@@ -14,49 +14,102 @@
 
 
 
-function onDidChangeModelContent() {
-  const topArea = document.getElementById("editor1");
-  const bottomArea = document.getElementById("editor2");
+// function onDidChangeModelContent() {
+//   const topArea = document.getElementById("editor1");
+//   const bottomArea = document.getElementById("editor2");
 
 
-  editor1.onDidChangeModelContent(() => {
-    editor2.setValue(editor1.getValue());
-  });
-  editor2.onDidChangeModelContent(() => {
-    editor1.setValue(editor2.getValue());
-  });
+//   editor1.onDidChangeModelContent(() => {
+//     editor2.setValue(editor1.getValue());
+//   });
+//   editor2.onDidChangeModelContent(() => {
+//     editor1.setValue(editor2.getValue());
+//   });
 
-  const startingMinutes = 5;
+//   const startingMinutes = 5;
 
-  let time = startingMinutes * 60;
+//   let time = startingMinutes * 60;
   
 
-  const countdownEl = document.getElementById("Countdown");
+//   const countdownEl = document.getElementById("Countdown");
 
-  function updateCountdown() {
+//   function updateCountdown() {
 
-     const minutes = Math.floor(time / 60);
-  let seconds = time % 60;
- countdownEl.innerText = `${minutes}: ${seconds}`;
-    time--;
+//      const minutes = Math.floor(time / 60);
+//   let seconds = time % 60;
+//  countdownEl.innerText = `${minutes}: ${seconds}`;
+//     time--;
+//   setInterval(updateCountdown, 1000);
+
+//   }
+  
+
+//   function toggleEditors(editorToEnable, editorToDisable) {
+
+//     if (time === 0){
+  
+//     editorToEnable.updateOptions({ readOnly: true });
+
+//     editorToDisable.updateOptions({ readOnly: false });
+//       time = startingMinutes * 60;
+//   }
+//   toggleEditors(topArea , bottomArea);
+  
+// }
+// }
+
+function waitForEditors(callback) {
+  if (window.topArea && window.bottomArea) {
+    callback();
+  } else {
+    setTimeout(() => waitForEditors(callback), 100);
+  }
+}
+
+waitForEditors(() => {
+  const startingMinutes = 5;
+  let time = startingMinutes * 60;
+  const countdownEl = document.getElementById("Countdown");  
+
+  let isSyncing = false;
+
+  topArea.onDidChangeModelContent(() => {
+    if (isSyncing) return;
+    isSyncing = true;
+    bottomArea.setValue(topArea.getValue());
+    isSyncing = false;
+  });
+
+  bottomArea.onDidChangeModelContent(() => {
+    if (isSyncing) return;
+    isSyncing = true;
+    topArea.setValue(bottomArea.getValue());
+    isSyncing = false;
+  });
+
   setInterval(updateCountdown, 1000);
 
-  }
-  
+  function updateCountdown() {
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
 
-  function toggleEditors(editorToEnable, editorToDisable) {
+    countdownEl.innerText = `${minutes}: ${seconds}`;
+    time--;
 
-    if (time === 0){
-  
-    editorToEnable.updateOptions({ readOnly: true });
-
-    editorToDisable.updateOptions({ readOnly: false });
+    if (time < 0) {
+      if (topArea.getOption(monaco.editor.EditorOption.readOnly)) {
+        topArea.updateOptions({ readOnly: false });
+        bottomArea.updateOptions({ readOnly: true });
+      } else {
+        bottomArea.updateOptions({ readOnly: false });
+        topArea.updateOptions({ readOnly: true });
+      }
       time = startingMinutes * 60;
+    }
   }
-  toggleEditors(topArea , bottomArea);
-  
-}
-}
+});
+
 
 
 
